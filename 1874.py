@@ -22,7 +22,6 @@ for target in arr:
         i += dif
         ans += "+\n" * dif
         
-
     if stack[-1] == target:
         del stack[-1]
         ans += "-\n"
