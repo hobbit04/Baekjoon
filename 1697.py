@@ -1,20 +1,23 @@
 from collections import deque
-import math
+
+
+max_num = 100000
+visited = [0] * (max_num + 1)
 
 
 def bfs(num, target):
-    queue = deque()
-    queue.append([(num, 0)])
-
-    while queue:
-        i, sec = queue.popleft()
-        if i == target:
-            return sec
-        queue.append([(i-1, sec+1)])
-        queue.append([(i+1, sec+1)])
-        queue.append([(2*i, sec+1)])
-        sec += 1
+    q = deque()
+    q.append(num)
+    while q:
+        x = q.popleft()
+        if x == target:
+            print(visited[x])
+            return
+        for pos in (x-1, x+1, 2*x):
+            if 0 <= pos <= max_num and not visited[pos]:
+                visited[pos] = visited[x] + 1
+                q.append(pos)
 
 
 n, k = map(int, input().split())
-print(bfs(n, k))
+bfs(n, k)
