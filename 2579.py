@@ -1,6 +1,10 @@
 # Data structure: List
-# Algorithm: Dynamic programming
-# 역순으로 계산. 
+# Algorithm: Dynamic programming(Devide and Conquer)
+# 1: 1
+# 2: 1+2
+# 3: max(1+3, 2+3)
+# 4: max(1+2+4, 1+3+4)
+# n: max(n + n-2, n + n-1 + n-3)
 
 n = int(input())
 
@@ -9,13 +13,15 @@ stairs = []
 for i in range(n):
     stairs.append(int(input()))
 
-points = [0] * n
-for i in range(n-1, 0, -1):
-    if i == n-1:
-        points[i] = stairs[i]
-    elif i == n-2:
-        points[i] = stairs[i] + stairs[i+1]
+score = [0] * n
+
+for i in range(n):
+    if i == 0:
+        score[i] = stairs[i]
+    elif i == 1:
+        score[i] = stairs[i-1] + stairs[i]
+    elif i == 2:
+        score[i] = max(stairs[i-2] + stairs[i], stairs[i-1] + stairs[i])
     else:
-        points[i] = max(stairs[i] + points[i+2], stairs[i] + points[i+1])
-    print(i, points[i])
-print(points[0])
+        score[i] = max(score[i-2] + stairs[i], score[i-3] + stairs[i-1] + stairs[i])
+print(score[-1])
